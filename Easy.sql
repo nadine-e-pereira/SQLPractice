@@ -52,6 +52,7 @@ Example: 'Ontario' instead of 'ON'
 
 SELECT P.first_name, P.last_name, PV.province_name
 FROM patients P
+INNER JOIN provinces PV ON PV.province_id = P.province_id
 
 /*
 Show how many patients have a birth_date with 2010 as the birth year.
