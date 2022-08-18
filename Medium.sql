@@ -86,3 +86,23 @@ SELECT city, COUNT (*) AS num_patients
 FROM patients
 GROUP BY city
 ORDER BY num_patients DESC;
+
+/*
+Show first name, last name and role of every person that is either patient or physician.
+The roles are either "Patient" or "Physician"
+*/
+
+SELECT first_name, last_name, "Patient" AS "Role" FROM patients
+UNION
+SELECT first_name, last_name, "Physician" FROM physicians;
+
+/*
+Show all allergies ordered by popularity. Remove 'NKA' and NULL values from query.
+*/
+
+SELECT allergies,COUNT(*) AS total_diagnosis
+FROM patients
+WHERE NOT allergies = 'NKA'AND allergies NOT NULL
+GROUP BY allergies
+ORDER BY total_diagnosis DESC
+
