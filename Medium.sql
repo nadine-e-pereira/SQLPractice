@@ -4,7 +4,7 @@ Show unique birth years from patients and order them by ascending.
 
 SELECT DISTINCT YEAR(birth_date)
 FROM patients
-order BY YEAR(birth_date) asc
+ORDER BY YEAR(birth_date) ASC;
 
 /*
 Show unique first names from the patients table which only occurs once in the list.
@@ -16,7 +16,7 @@ include them in the output.
 SELECT first_name
 FROM patients
 GROUP BY first_name
-HAVING COUNT(first_name) = 1
+HAVING COUNT(first_name) = 1;
 
 /*
 Show patient_id and first_name from patients where their first_name start and ends with 
@@ -35,7 +35,7 @@ Primary diagnosis is stored in the admissions table.
 SELECT P.patient_id, P.first_name, P.last_name
 FROM patients P
 JOIN admissions A ON P.patient_id = A.patient_id
-WHERE primary_diagnosis = 'Dementia'
+WHERE primary_diagnosis = 'Dementia';
 
 /*
 Display every patient's first_name.
@@ -65,7 +65,7 @@ first_name then by last_name.
 SELECT first_name, last_name, allergies
 FROM patients
 WHERE allergies IN ('Penicillin', 'Morphine')
-ORDER BY allergies asc, first_name asc, last_name ASC
+ORDER BY allergies ASC, first_name ASC, last_name ASC;
 
 /*
 Show patient_id, primary_diagnosis from admissions. Find patients admitted multiple 
@@ -75,7 +75,7 @@ times for the same primary_diagnosis.
 SELECT patient_id, primary_diagnosis
 FROM admissions
 GROUP BY patient_id, primary_diagnosis
-HAVING COUNT (*) > 1
+HAVING COUNT (*) > 1;
 
 /*
 Show the city and the total number of patients in the city in the order from most to 
@@ -85,4 +85,4 @@ least patients.
 SELECT city, COUNT (*) AS num_patients
 FROM patients
 GROUP BY city
-ORDER BY num_patients desc
+ORDER BY num_patients DESC;
