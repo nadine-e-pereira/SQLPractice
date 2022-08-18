@@ -81,4 +81,56 @@ We are looking for a specific patient. Pull all columns for the patient who matc
 - They are from the city 'Halifax'
 */
 
+SELECT *
+FROM patients
+WHERE
+  first_name LIKE '__r%'
+  AND gender = 'F'
+  AND MONTH(birth_date) IN (2, 5, 12)
+  AND weight BETWEEN 60 AND 80
+  AND patient_id % 2 = 1
+  AND city = 'Halifax';
+  
+ /*
+ Show the percent of patients that have 'M' as their gender. Round the answer to the nearest hundreth number and in percent form.
+ */
 
+SELECT CONCAT(
+    ROUND(
+      (
+        SELECT COUNT(*)
+        FROM patients
+        WHERE gender = 'M'
+      ) / CAST(COUNT(*) AS float),
+      4
+    ) * 100,
+    '%'
+  ) AS percent_of_male_patients
+FROM patients;
+
+/*
+Show the patient_id and total_spent for patients who spent over 150 in medication_cost. Sort by most total_spent to least total_spent.
+*/
+
+SELECT
+  patient_id,
+  SUM(medication_cost) AS total_spent
+FROM unit_dose_orders udo
+  JOIN medications me ON udo.medication_id = me.medication_id
+GROUP BY patient_id
+HAVING total_spent > 150
+ORDER BY total_spent DESC;
+
+/*
+Provide the description of each item, along with the total cost of the quantity on hand (rounded to the nearest whole dollar), 
+and the associated primary vendor. Sort the output by the most spent to the least spent on inventory.
+*/
+
+SELECT
+  i.item_description,
+  ROUND(i.item_cost * i.quantity_on_hand, 0) AS total_cost,
+  v.vendor_name
+FROM items i
+  JOIN vendors v ON i.primary_vendor_id = v.vendor_id
+GROUP BY i.item_description
+ORDER BY total_cost DESC;
